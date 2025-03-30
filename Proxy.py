@@ -20,7 +20,7 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
-  serverSocker = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ## Use Ipv4
+  firstSocker = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ## Use Ipv4
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
 except:
@@ -30,7 +30,7 @@ except:
 try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
-  serverSocker.bind((proxyHost, proxyPort))
+  firstSocker.bind((proxyHost, proxyPort))
   # ~~~~ END CODE INSERT ~~~~
   print ('Port is bound')
 except:
@@ -40,7 +40,7 @@ except:
 try:
   # Listen on the server socket
   # ~~~~ INSERT CODE ~~~~
-  serverSocker.listen(5) #The server socket is in listening mode and allows up to 5 clients.
+  firstSocker.listen(5) #The server socket is in listening mode and allows up to 5 clients.
   # ~~~~ END CODE INSERT ~~~~
   print ('Listening to socket')
 except:
@@ -55,7 +55,7 @@ while True:
   # Accept connection from client and store in the clientSocket
   try:
     # ~~~~ INSERT CODE ~~~~
-    clientSocket, clientAddress = serverSocker.accept()
+    clientSocket, clientAddress = firstSocker.accept()
     # ~~~~ END CODE INSERT ~~~~
     print ('Received a connection')
   except:
@@ -118,8 +118,8 @@ while True:
     # ProxyServer finds a cache hit
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
-    for data in cacheData:
-      clientSocket.send(data.encode())
+    for x in cacheData:
+      clientSocket.send(x.encode())
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')

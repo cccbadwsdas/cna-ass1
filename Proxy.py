@@ -40,7 +40,7 @@ except:
 try:
   # Listen on the server socket
   # ~~~~ INSERT CODE ~~~~
-  serverSocker.listen(5)
+  serverSocker.listen(5) #The server socket is in listening mode and allows up to 5 clients.
   # ~~~~ END CODE INSERT ~~~~
   print ('Listening to socket')
 except:
@@ -139,7 +139,7 @@ while True:
       address = socket.gethostbyname(hostname)
       # Connect to the origin server
       # ~~~~ INSERT CODE ~~~~
-      originServerSocket.connect(address,80)
+      originServerSocket.connect((address, 80)) 
       # ~~~~ END CODE INSERT ~~~~
       print ('Connected to origin Server')
 

@@ -20,7 +20,7 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
-  firstSocker = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ## Use Ipv4
+  firstSocker = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ## Create an IPv4 and TCP server socket.
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
 except:
@@ -30,7 +30,7 @@ except:
 try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
-  firstSocker.bind((proxyHost, proxyPort))
+  firstSocker.bind((proxyHost, proxyPort))## Bind the server socket to the specified host proxyHost and port proxyPort.
   # ~~~~ END CODE INSERT ~~~~
   print ('Port is bound')
 except:
@@ -55,7 +55,7 @@ while True:
   # Accept connection from client and store in the clientSocket
   try:
     # ~~~~ INSERT CODE ~~~~
-    clientSocket, clientAddress = firstSocker.accept()
+    clientSocket, clientAddress = firstSocker.accept()##Wait for client connection requests and accept the connection, returning clientSocket and clientAddress.
     # ~~~~ END CODE INSERT ~~~~
     print ('Received a connection')
   except:
@@ -65,7 +65,7 @@ while True:
   # Get HTTP request from client
   # and store it in the variable: message_bytes
   # ~~~~ INSERT CODE ~~~~
-  message_bytes = clientSocket.recv(BUFFER_SIZE)
+  message_bytes = clientSocket.recv(BUFFER_SIZE)##Read the HTTP request data from clientSocket, up to BUFFER_SIZE bytes.
   # ~~~~ END CODE INSERT ~~~~
   message = message_bytes.decode('utf-8')
   print ('Received request:')
@@ -119,7 +119,7 @@ while True:
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
     for x in cacheData:
-      clientSocket.send(x.encode())
+      clientSocket.send(x.encode())## Read the cached data line by line and send it to the client through clientSocket
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')
@@ -130,7 +130,7 @@ while True:
     # Create a socket to connect to origin server
     # and store in originServerSocket
     # ~~~~ INSERT CODE ~~~~
-    originServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    originServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ## Create a new socket to establish a TCP connection with the origin server.
     # ~~~~ END CODE INSERT ~~~~
 
     print ('Connecting to:\t\t' + hostname + '\n')
@@ -139,7 +139,7 @@ while True:
       address = socket.gethostbyname(hostname)
       # Connect to the origin server
       # ~~~~ INSERT CODE ~~~~
-      originServerSocket.connect((address, 80)) 
+      originServerSocket.connect((address, 80))  ## Connect to the origin server's address using HTTP port 80.
       # ~~~~ END CODE INSERT ~~~~
       print ('Connected to origin Server')
 
@@ -150,8 +150,8 @@ while True:
       # originServerRequest is the first line in the request and
       # originServerRequestHeader is the second line in the request
       # ~~~~ INSERT CODE ~~~~
-      originServerRequest = f"GET {resource} HTTP/1.1"
-      originServerRequestHeader = f"Host: {hostname}"
+      originServerRequest = f"GET {resource} HTTP/1.1" ##Construct the HTTP request line to request the resource
+      originServerRequestHeader = f"Host: {hostname}" ##Construct the HTTP request headers, specifying the target hostname (in accordance with the HTTP/1.1 specification).
       # ~~~~ END CODE INSERT ~~~~
 
       # Construct the request to send to the origin server
@@ -172,12 +172,12 @@ while True:
 
       # Get the response from the origin server
       # ~~~~ INSERT CODE ~~~~
-      originServerResponse = originServerSocket.recv(BUFFER_SIZE)
+      originServerResponse = originServerSocket.recv(BUFFER_SIZE) ##Read the data returned by the origin server from originServerSocket.
       # ~~~~ END CODE INSERT ~~~~
 
       # Send the response to the client
       # ~~~~ INSERT CODE ~~~~
-      clientSocket.sendall(originServerResponse)
+      clientSocket.sendall(originServerResponse) ##Send the originServerResponse to the client through clientSocket.
       # ~~~~ END CODE INSERT ~~~~
 
       # Create a new file in the cache for the requested file.
@@ -189,7 +189,7 @@ while True:
 
       # Save origin server response in the cache file
       # ~~~~ INSERT CODE ~~~~
-      cacheFile.write(originServerResponse)
+      cacheFile.write(originServerResponse)  ##Write the originServerResponse to the cacheFile
       # ~~~~ END CODE INSERT ~~~~
       cacheFile.close()
       print ('cache file closed')
